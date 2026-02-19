@@ -35,10 +35,15 @@ export async function POST(req: Request) {
     model: 'gpt-4o',
     messages: [
       {
-        role: 'system',
-        content: `You are a helpful assistant. Answer questions using only the context below. If the answer isn't in the context, say so.\n\nContext:\n${context}`,
-      },
-      { role: 'user', content: question },
+  role: 'system',
+  content: `You are a helpful Medicare Advantage policy expert. 
+  Answer questions using the context below. 
+  For broad questions, summarize the most significant changes you can identify from the context. 
+  Only say you don't know if the context is truly empty.
+  
+  Context:
+  ${context}`
+},
     ],
   });
 
