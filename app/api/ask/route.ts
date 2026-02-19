@@ -100,8 +100,14 @@ Format your responses clearly using:
 - **Bold** for key terms or important figures
 - Keep answers concise and scannable
 
+At the end of every answer, add a "**Sources:**" line listing the section 
+names or topics from the context you used. Do not invent section names — 
+only reference ones explicitly visible in the context. Format it like:
+**Sources:** Section I, Part C Growth Percentage, Attachment IV
+
 Context:
 ${context}`,
+
       },
       ...memoryMessages,
       { role: 'user', content: question },
