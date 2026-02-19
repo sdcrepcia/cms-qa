@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Markdown from "react-markdown";
+import ReactMarkdown from "react-markdown";
 
 const SUGGESTED_QUESTIONS = [
   "What is the projected MA growth percentage for 2027?",
@@ -13,6 +13,7 @@ const SUGGESTED_QUESTIONS = [
 type QAPair = {
   question: string;
   answer: string;
+  confidence: "high" | "medium" | "low";
 };
 
 export default function AskForm() {
@@ -30,12 +31,17 @@ export default function AskForm() {
     const res = await fetch("/api/ask", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ question: activeQuestion }),
+      body: JSON.stringify({ question: activeQuestion, history }),
     });
     const data = await res.json();
+    console.log("API response:", data);
 
     setHistory((prev) => [
-      { question: activeQuestion, answer: data.answer },
+      {
+        question: activeQuestion,
+        answer: data.answer,
+        confidence: data.confidence,
+      },
       ...prev,
     ]);
     setIsLoading(false);
@@ -110,8 +116,23 @@ export default function AskForm() {
           <p className="text-xs text-gray-400 uppercase font-semibold mb-1">
             Answer
           </p>
+          <span
+            className={`inline-block text-xs font-semibold px-2 py-0.5 rounded-full mb-2 ${
+              pair.confidence === "high"
+                ? "bg-green-100 text-green-700"
+                : pair.confidence === "medium"
+                ? "bg-yellow-100 text-yellow-700"
+                : "bg-red-100 text-red-700"
+            }`}
+          >
+            {pair.confidence === "high"
+              ? "● High confidence"
+              : pair.confidence === "medium"
+              ? "● Medium confidence"
+              : "● Low confidence"}
+          </span>
           <div className="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300">
-            <Markdown>{pair.answer}</Markdown>
+            <ReactMarkdown>{pair.answer}</ReactMarkdown>
           </div>
         </div>
       ))}
