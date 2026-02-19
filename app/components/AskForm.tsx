@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import ReactMarkdown from "react-markdown";
 
 const SUGGESTED_QUESTIONS = [
   "What is the projected MA growth percentage for 2027?",
@@ -109,9 +110,9 @@ export default function AskForm() {
           <p className="text-xs text-gray-400 uppercase font-semibold mb-1">
             Answer
           </p>
-          <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-            {pair.answer}
-          </p>
+          <div className="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300">
+            <ReactMarkdown>{pair.answer}</ReactMarkdown>
+          </div>
         </div>
       ))}
     </div>
