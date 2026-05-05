@@ -1,9 +1,8 @@
 # AskCMS
 
-Upload a PDF and ask questions about it. RAG-based document Q&A using embeddings and AI.
+Ask questions about the 2027 CMS Advance Notice using AI. Built as a RAG tool over the official CMS PDF.
 
 ## Stack
 - Next.js, TypeScript
 - Supabase (pgvector)
 - OpenAI API
-- PDF parsing (pdf-parse)
